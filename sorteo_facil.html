@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sorteo Fácil</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f4f6fb;color:#222}
+.container{max-width:900px;margin:0 auto;padding:24px}
+.card{background:white;border-radius:18px;padding:24px;margin-bottom:18px;box-shadow:0 5px 20px #00000012}
+h1{margin:0 0 8px;font-size:32px}.sub{color:#666;margin-bottom:22px}
+label{font-weight:bold;display:block;margin:12px 0 6px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #d7dbe5;border-radius:10px;font-size:16px}
+textarea{min-height:220px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+button{border:0;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+.primary{background:#222;color:white;width:100%;margin-top:18px;font-size:19px}
+.secondary{background:#eef1f7;color:#222}.danger{background:#ffe9e9;color:#a00}
+#resultado{text-align:center;display:none}.winner{font-size:30px;font-weight:bold;margin:10px 0}
+.badge{display:inline-block;background:#f0f3f8;border-radius:20px;padding:6px 10px;margin:4px;font-size:14px}
+.count{color:#666;margin-top:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#anim{font-size:24px;color:#555;min-height:35px}
+@media(max-width:650px){.row{grid-template-columns:1fr}.container{padding:14px}h1{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card">
+<h1>🎉 Sorteo Fácil</h1>
+<div class="sub">Cargá los participantes y elegí uno o varios ganadores.</div>
+
+<label>Nombre del sorteo</label>
+<input id="nombre" placeholder="Ej.: Sorteo Día del Niño">
+
+<label>Participantes</label>
+<textarea id="participantes" placeholder="Escribí un participante por línea&#10;Juan Pérez&#10;María López&#10;Carlos Gómez"></textarea>
+<div class="count" id="contador">0 participantes</div>
+
+<div class="row">
+<div>
+<label>Cantidad de ganadores</label>
+<select id="cantidad">
+<option value="1">1 ganador</option>
+<option value="2">2 ganadores</option>
+<option value="3">3 ganadores</option>
+<option value="4">4 ganadores</option>
+<option value="5">5 ganadores</option>
+<option value="10">10 ganadores</option>
+</select>
+</div>
+<div>
+<label>Modo</label>
+<select id="modo">
+<option value="unicos">Sin repetir ganadores</option>
+<option value="repetidos">Permitir repetidos</option>
+</select>
+</div>
+</div>
+
+<button class="primary" onclick="sortear()">🎰 REALIZAR SORTEO</button>
+</div>
+
+<div class="card" id="resultado">
+<h2 id="tituloResultado"></h2>
+<div id="anim"></div>
+<div id="ganadores"></div>
+<div class="actions">
+<button class="secondary" onclick="copiar()">📋 Copiar resultado</button>
+<button class="secondary" onclick="descargar()">📄 Descargar resultado</button>
+<button class="danger" onclick="limpiarResultado()">↩ Nuevo sorteo</button>
+</div>
+</div>
+</div>
+
+<script>
+const p=document.getElementById('participantes');
+p.addEventListener('input',actualizar);
+function lista(){
+ return p.value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+}
+function actualizar(){document.getElementById('contador').textContent=lista().length+' participante'+(lista().length===1?'':'s')}
+function randomInt(max){return Math.floor(Math.random()*max)}
+function sortear(){
+ const arr=lista(), n=parseInt(document.getElementById('cantidad').value);
+ if(!arr.length){alert('Cargá al menos un participante.');return}
+ if(document.getElementById('modo').value==='unicos' && n>arr.length){
+   alert('La cantidad de ganadores no puede superar la cantidad de participantes.');return
+ }
+ const gan=[];
+ while(gan.length<n){
+   const elegido=arr[randomInt(arr.length)];
+   if(document.getElementById('modo').value==='repetidos'||!gan.includes(elegido))gan.push(elegido);
+ }
+ const box=document.getElementById('resultado'); box.style.display='block';
+ document.getElementById('tituloResultado').textContent=document.getElementById('nombre').value.trim()||'Resultado del sorteo';
+ const anim=document.getElementById('anim'), gb=document.getElementById('ganadores');
+ gb.innerHTML=''; anim.textContent='🎲 Sorteando...';
+ let vueltas=0;
+ const timer=setInterval(()=>{
+   anim.textContent='🎲 '+arr[randomInt(arr.length)];
+   vueltas++;
+   if(vueltas>=18){
+     clearInterval(timer);anim.textContent='🏆 ¡Ganadores!';
+     gan.forEach((x,i)=>{const d=document.createElement('div');d.className='winner';d.textContent=(gan.length>1?(i+1)+'. ':'')+x;gb.appendChild(d)});
+   }
+ },80);
+ box.scrollIntoView({behavior:'smooth'});
+}
+function texto(){
+ const titulo=document.getElementById('nombre').value.trim()||'Sorteo';
+ const winners=[...document.querySelectorAll('.winner')].map(x=>x.textContent);
+ return titulo+'\\n\\nGanadores:\\n'+winners.join('\\n')+'\\n\\nFecha: '+new Date().toLocaleString('es-AR');
+}
+function copiar(){navigator.clipboard.writeText(texto()).then(()=>alert('Resultado copiado.'))}
+function descargar(){
+ const blob=new Blob([texto()],{type:'text/plain;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='resultado-sorteo.txt';a.click();URL.revokeObjectURL(a.href);
+}
+function limpiarResultado(){document.getElementById('resultado').style.display='none'}
+actualizar();
+</script>
+</body>
+</html>
