@@ -7,6 +7,7 @@
 <title>Sorteo de Orden de Apellidos - Registro Civil</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -64,7 +65,8 @@ label{
   margin:12px 0 6px;
 }
 
-input,textarea{
+input,
+textarea{
   width:100%;
   padding:12px;
   border:1px solid #d7dbe5;
@@ -91,6 +93,7 @@ textarea{
   margin-top:10px;
   color:#555;
   font-size:14px;
+  line-height:1.5;
 }
 
 .count{
@@ -106,6 +109,11 @@ button{
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .primary{
@@ -160,15 +168,24 @@ button{
 }
 
 .apellido-principal{
-  font-size:32px;
+  font-size:34px;
   font-weight:bold;
-  margin:8px 0;
+  margin:8px 0 22px;
 }
 
 .orden-completo{
-  font-size:22px;
+  font-size:23px;
   font-weight:bold;
   margin-top:12px;
+  letter-spacing:.5px;
+}
+
+.estado{
+  margin-top:15px;
+  padding:10px;
+  border-radius:10px;
+  background:#f1f6f1;
+  font-size:14px;
 }
 
 .actions{
@@ -178,6 +195,14 @@ button{
   margin-top:20px;
   justify-content:center;
 }
+
+.nota-seguridad{
+  margin-top:15px;
+  font-size:13px;
+  color:#666;
+  line-height:1.5;
+}
+
 
 /* CONSTANCIA */
 
@@ -282,10 +307,6 @@ button{
   line-height:1.6;
 }
 
-.nuevo{
-  text-align:center;
-  margin:20px 0;
-}
 
 /* IMPRESIÓN */
 
@@ -301,7 +322,7 @@ button{
   }
 
   .container{
-    display:none;
+    display:none !important;
   }
 
   #constancia{
@@ -315,7 +336,11 @@ button{
     padding:20mm 18mm;
     box-shadow:none;
   }
+
 }
+
+
+/* CELULAR */
 
 @media(max-width:650px){
 
@@ -336,659 +361,1245 @@ button{
   }
 
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-  <!-- CARGA DE DATOS -->
 
-  <div class="card">
+<!-- FORMULARIO -->
 
-    <img src="images.png" alt="Registro Civil" class="logo">
+<div class="card">
 
-    <h1>SORTEO DE ORDEN DE APELLIDOS</h1>
+<img src="images.png"
+     alt="Registro Civil"
+     class="logo">
 
-    <div class="sub">
-      REGISTRO CIVIL · ÁREA DE NACIMIENTOS
-    </div>
+<h1>SORTEO DE ORDEN DE APELLIDOS</h1>
 
-    <div class="section-title">
-      Datos de la oficina
-    </div>
-
-    <label>Oficina / Registro Civil</label>
-    <input id="oficina">
-
-    <div class="section-title">
-      Datos del/la menor
-    </div>
-
-    <div class="row">
-
-      <div>
-        <label>Nombre del/la menor</label>
-        <input id="menor">
-      </div>
-
-      <div>
-        <label>Fecha de nacimiento</label>
-        <input id="fechaNacimiento" type="date">
-      </div>
-
-    </div>
-
-    <div class="section-title">
-      Datos de los progenitores
-    </div>
-
-    <div class="row">
-
-      <div>
-        <label>Progenitor/a 1</label>
-        <input id="progenitor1">
-      </div>
-
-      <div>
-        <label>DNI progenitor/a 1</label>
-        <input id="dni1" inputmode="numeric">
-      </div>
-
-      <div>
-        <label>Progenitor/a 2</label>
-        <input id="progenitor2">
-      </div>
-
-      <div>
-        <label>DNI progenitor/a 2</label>
-        <input id="dni2" inputmode="numeric">
-      </div>
-
-    </div>
-
-    <div class="section-title">
-      Apellidos que participan del sorteo
-    </div>
-
-    <label>Apellidos</label>
-
-    <textarea id="apellidos"
-      placeholder="Ingresá un apellido por línea.&#10;Ejemplo:&#10;GIGENA&#10;RE"></textarea>
-
-    <div class="count" id="contador">
-      0 apellidos
-    </div>
-
-    <div class="info">
-      Ingresá los apellidos en líneas separadas. El sistema realizará el sorteo para determinar el orden correspondiente.
-    </div>
-
-    <button class="primary" onclick="realizarSorteo()">
-      🎲 REALIZAR SORTEO
-    </button>
-
-  </div>
+<div class="sub">
+REGISTRO CIVIL · ÁREA DE NACIMIENTOS
+</div>
 
 
-  <!-- RESULTADO -->
+<div class="section-title">
+Datos de la oficina
+</div>
 
-  <div class="card" id="resultado">
+<label>
+Oficina / Registro Civil
+</label>
 
-    <h2>RESULTADO DEL SORTEO</h2>
+<input id="oficina">
 
-    <div class="codigo" id="codigoResultado"></div>
 
-    <div id="anim"></div>
+<div class="section-title">
+Datos del/la menor
+</div>
 
-    <div class="resultado-final">
+<div class="row">
 
-      <div class="titulo">
-        PRIMER APELLIDO DETERMINADO
-      </div>
+<div>
 
-      <div class="apellido-principal" id="primerApellido"></div>
+<label>
+Nombre del/la menor
+</label>
 
-      <div class="titulo">
-        ORDEN RESULTANTE DE LOS APELLIDOS
-      </div>
-
-      <div class="orden-completo" id="ordenResultado"></div>
-
-    </div>
-
-    <div class="actions">
-
-      <button class="primary"
-        style="width:auto;margin-top:0"
-        onclick="mostrarConstancia()">
-        🖨️ IMPRIMIR CONSTANCIA
-      </button>
-
-      <button class="secondary" onclick="copiarResultado()">
-        📋 COPIAR RESULTADO
-      </button>
-
-      <button class="danger" onclick="nuevoSorteo()">
-        ↩ NUEVO SORTEO
-      </button>
-
-    </div>
-
-  </div>
+<input id="menor">
 
 </div>
 
 
-<!-- CONSTANCIA PARA IMPRESIÓN -->
+<div>
+
+<label>
+Fecha de nacimiento
+</label>
+
+<input id="fechaNacimiento"
+       type="date">
+
+</div>
+
+</div>
+
+
+<div class="section-title">
+Datos de los progenitores
+</div>
+
+<div class="row">
+
+
+<div>
+
+<label>
+Progenitor/a 1
+</label>
+
+<input id="progenitor1">
+
+</div>
+
+
+<div>
+
+<label>
+DNI progenitor/a 1
+</label>
+
+<input id="dni1"
+       inputmode="numeric">
+
+</div>
+
+
+<div>
+
+<label>
+Progenitor/a 2
+</label>
+
+<input id="progenitor2">
+
+</div>
+
+
+<div>
+
+<label>
+DNI progenitor/a 2
+</label>
+
+<input id="dni2"
+       inputmode="numeric">
+
+</div>
+
+
+</div>
+
+
+<div class="section-title">
+Apellidos que participan del sorteo
+</div>
+
+<label>
+Apellidos
+</label>
+
+<textarea id="apellidos"
+placeholder="Ingresá un apellido por línea.
+Ejemplo:
+GIGENA
+RE"></textarea>
+
+<div class="count"
+     id="contador">
+0 apellidos
+</div>
+
+
+<div class="info">
+
+Ingresá los apellidos en líneas separadas.
+El sistema realizará el sorteo para determinar el orden correspondiente.
+
+</div>
+
+
+<button class="primary"
+        id="botonSortear"
+        onclick="realizarSorteo()">
+
+🎲 REALIZAR SORTEO
+
+</button>
+
+
+</div>
+
+
+
+<!-- RESULTADO -->
+
+<div class="card"
+     id="resultado">
+
+
+<h2>
+RESULTADO DEL SORTEO
+</h2>
+
+
+<div class="codigo"
+     id="codigoResultado">
+</div>
+
+
+<div id="anim">
+</div>
+
+
+<div class="resultado-final">
+
+
+<div class="titulo">
+PRIMER APELLIDO DETERMINADO
+</div>
+
+
+<div class="apellido-principal"
+     id="primerApellido">
+</div>
+
+
+<div class="titulo">
+ORDEN RESULTANTE DE LOS APELLIDOS
+</div>
+
+
+<div class="orden-completo"
+     id="ordenResultado">
+</div>
+
+
+<div class="estado">
+
+✓ Resultado generado y fijado por el sistema
+
+</div>
+
+
+</div>
+
+
+<div class="actions">
+
+
+<button class="primary"
+        style="width:auto;margin-top:0"
+        onclick="mostrarConstancia()">
+
+🖨️ IMPRIMIR CONSTANCIA
+
+</button>
+
+
+<button class="secondary"
+        onclick="copiarResultado()">
+
+📋 COPIAR RESULTADO
+
+</button>
+
+
+<button class="danger"
+        onclick="nuevoSorteo()">
+
+↩ NUEVO SORTEO
+
+</button>
+
+
+</div>
+
+
+<div class="nota-seguridad">
+
+Una vez realizado el sorteo, el resultado queda asociado al código
+generado para esta operación.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- CONSTANCIA -->
 
 <div id="constancia">
 
-  <div class="constancia">
 
-    <div class="constancia-header">
-
-      <img src="images.png" alt="Registro Civil">
-
-      <h2>REGISTRO CIVIL</h2>
-
-      <h3>ÁREA DE NACIMIENTOS</h3>
-
-    </div>
-
-    <div class="constancia-titulo">
-      CONSTANCIA DE SORTEO PARA DETERMINACIÓN DEL ORDEN DE APELLIDOS
-    </div>
-
-    <div class="datos">
-
-      <div class="dato">
-        <strong>Oficina / Registro Civil:</strong>
-        <span id="cOficina"></span>
-      </div>
-
-      <div class="dato">
-        <strong>Fecha del sorteo:</strong>
-        <span id="cFecha"></span>
-      </div>
-
-      <div class="dato">
-        <strong>Hora del sorteo:</strong>
-        <span id="cHora"></span>
-      </div>
-
-      <div class="dato">
-        <strong>Código del sorteo:</strong>
-        <span id="cCodigo"></span>
-      </div>
-
-    </div>
+<div class="constancia">
 
 
-    <div class="section-title">
-      DATOS DEL/LA MENOR
-    </div>
-
-    <div class="datos">
-
-      <div class="dato">
-        <strong>Nombre:</strong>
-        <span id="cMenor"></span>
-      </div>
-
-      <div class="dato">
-        <strong>Fecha de nacimiento:</strong>
-        <span id="cFechaNacimiento"></span>
-      </div>
-
-    </div>
+<div class="constancia-header">
 
 
-    <div class="section-title">
-      DATOS DE LOS PROGENITORES
-    </div>
-
-    <div class="datos">
-
-      <div class="dato">
-        <strong>Progenitor/a 1:</strong>
-        <span id="cProgenitor1"></span>
-      </div>
-
-      <div class="dato">
-        <strong>DNI:</strong>
-        <span id="cDni1"></span>
-      </div>
-
-      <div class="dato">
-        <strong>Progenitor/a 2:</strong>
-        <span id="cProgenitor2"></span>
-      </div>
-
-      <div class="dato">
-        <strong>DNI:</strong>
-        <span id="cDni2"></span>
-      </div>
-
-    </div>
+<img src="images.png"
+     alt="Registro Civil">
 
 
-    <div class="constancia-texto">
-
-      Se deja constancia de que, ante la falta de acuerdo respecto del
-      orden de los apellidos, se realizó el correspondiente sorteo mediante
-      la plataforma destinada a tal fin por el Área de Nacimientos del
-      Registro Civil.
-
-    </div>
+<h2>
+REGISTRO CIVIL
+</h2>
 
 
-    <div class="resultado-constancia">
+<h3>
+ÁREA DE NACIMIENTOS
+</h3>
 
-      <div>
-        PRIMER APELLIDO DETERMINADO
-      </div>
-
-      <div class="orden" id="cPrimerApellido"></div>
-
-      <div style="margin-top:18px;">
-        ORDEN RESULTANTE DE LOS APELLIDOS
-      </div>
-
-      <div class="orden" id="cOrden"></div>
-
-    </div>
-
-
-    <div class="constancia-texto">
-
-      El presente documento deja constancia del resultado obtenido mediante
-      el procedimiento de sorteo, a efectos de su incorporación a la
-      documentación correspondiente.
-
-    </div>
-
-
-    <div class="codigo-constancia">
-
-      Código de sorteo: <strong id="cCodigoFinal"></strong>
-
-    </div>
-
-
-    <div class="firmas">
-
-      <div class="firma">
-
-        Firma progenitor/a 1<br>
-        <br>
-        Aclaración: __________________________<br>
-        DNI: _________________________________
-
-      </div>
-
-      <div class="firma">
-
-        Firma progenitor/a 2<br>
-        <br>
-        Aclaración: __________________________<br>
-        DNI: _________________________________
-
-      </div>
-
-      <div class="firma">
-
-        Firma Oficial Público Interviniente<br>
-        <br>
-        Aclaración: __________________________<br>
-        DNI: _________________________________
-
-      </div>
-
-    </div>
-
-  </div>
 
 </div>
+
+
+<div class="constancia-titulo">
+
+CONSTANCIA DE SORTEO PARA DETERMINACIÓN DEL ORDEN DE APELLIDOS
+
+</div>
+
+
+<div class="datos">
+
+
+<div class="dato">
+
+<strong>
+Oficina / Registro Civil:
+</strong>
+
+<span id="cOficina"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+Fecha del sorteo:
+</strong>
+
+<span id="cFecha"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+Hora del sorteo:
+</strong>
+
+<span id="cHora"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+Código del sorteo:
+</strong>
+
+<span id="cCodigo"></span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="section-title">
+DATOS DEL/LA MENOR
+</div>
+
+
+<div class="datos">
+
+
+<div class="dato">
+
+<strong>
+Nombre:
+</strong>
+
+<span id="cMenor"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+Fecha de nacimiento:
+</strong>
+
+<span id="cFechaNacimiento"></span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="section-title">
+DATOS DE LOS PROGENITORES
+</div>
+
+
+<div class="datos">
+
+
+<div class="dato">
+
+<strong>
+Progenitor/a 1:
+</strong>
+
+<span id="cProgenitor1"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+DNI:
+</strong>
+
+<span id="cDni1"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+Progenitor/a 2:
+</strong>
+
+<span id="cProgenitor2"></span>
+
+</div>
+
+
+<div class="dato">
+
+<strong>
+DNI:
+</strong>
+
+<span id="cDni2"></span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="constancia-texto">
+
+Se deja constancia de que, ante la falta de acuerdo respecto del
+orden de los apellidos, se realizó el correspondiente sorteo mediante
+la plataforma destinada a tal fin por el Área de Nacimientos del
+Registro Civil.
+
+</div>
+
+
+
+<div class="resultado-constancia">
+
+
+<div>
+PRIMER APELLIDO DETERMINADO
+</div>
+
+
+<div class="orden"
+     id="cPrimerApellido">
+</div>
+
+
+<div style="margin-top:18px;">
+
+ORDEN RESULTANTE DE LOS APELLIDOS
+
+</div>
+
+
+<div class="orden"
+     id="cOrden">
+</div>
+
+
+</div>
+
+
+
+<div class="constancia-texto">
+
+El presente documento deja constancia del resultado obtenido mediante
+el procedimiento de sorteo, a efectos de su incorporación a la
+documentación correspondiente.
+
+</div>
+
+
+
+<div class="codigo-constancia">
+
+Código de sorteo:
+<strong id="cCodigoFinal"></strong>
+
+</div>
+
+
+
+<div class="firmas">
+
+
+<div class="firma">
+
+Firma progenitor/a 1
+
+<br><br>
+
+Aclaración: __________________________
+
+<br>
+
+DNI: _________________________________
+
+</div>
+
+
+<div class="firma">
+
+Firma progenitor/a 2
+
+<br><br>
+
+Aclaración: __________________________
+
+<br>
+
+DNI: _________________________________
+
+</div>
+
+
+<div class="firma">
+
+Firma Oficial Público Interviniente
+
+<br><br>
+
+Aclaración: __________________________
+
+<br>
+
+DNI: _________________________________
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
 
 
 <script>
 
-const apellidosInput = document.getElementById('apellidos');
 
-apellidosInput.addEventListener('input', actualizarContador);
+const apellidosInput =
+document.getElementById('apellidos');
+
+
+apellidosInput.addEventListener(
+'input',
+actualizarContador
+);
+
+
+let resultadoActual = null;
+
+let codigoActual = null;
+
+let fechaHoraSorteo = null;
+
 
 
 function listaApellidos(){
 
-  return apellidosInput.value
-    .split(/\r?\n/)
-    .map(x => x.trim())
-    .filter(Boolean);
+return apellidosInput.value
+.split(/\r?\n/)
+.map(x => x.trim())
+.filter(Boolean);
 
 }
+
 
 
 function actualizarContador(){
 
-  const cantidad = listaApellidos().length;
+const cantidad =
+listaApellidos().length;
 
-  document.getElementById('contador').textContent =
-    cantidad + ' apellido' + (cantidad === 1 ? '' : 's');
+
+document.getElementById('contador').textContent =
+
+cantidad +
+' apellido' +
+(cantidad === 1 ? '' : 's');
 
 }
+
 
 
 function generarCodigo(){
 
-  const ahora = new Date();
+const ahora = new Date();
 
-  const fecha =
-    ahora.getFullYear().toString() +
-    String(ahora.getMonth()+1).padStart(2,'0') +
-    String(ahora.getDate()).padStart(2,'0');
 
-  const hora =
-    String(ahora.getHours()).padStart(2,'0') +
-    String(ahora.getMinutes()).padStart(2,'0') +
-    String(ahora.getSeconds()).padStart(2,'0');
+const fecha =
 
-  const aleatorio =
-    Math.floor(100 + Math.random() * 900);
+ahora.getFullYear().toString() +
 
-  return 'RC-NAC-' + fecha + '-' + hora + '-' + aleatorio;
+String(
+ahora.getMonth()+1
+).padStart(2,'0') +
+
+String(
+ahora.getDate()
+).padStart(2,'0');
+
+
+const hora =
+
+String(
+ahora.getHours()
+).padStart(2,'0') +
+
+String(
+ahora.getMinutes()
+).padStart(2,'0') +
+
+String(
+ahora.getSeconds()
+).padStart(2,'0');
+
+
+const aleatorio =
+
+Math.floor(
+100 + Math.random() * 900
+);
+
+
+return 'RC-NAC-' +
+fecha +
+'-' +
+hora +
+'-' +
+aleatorio;
 
 }
+
 
 
 function mezclar(array){
 
-  const copia = [...array];
+const copia = [...array];
 
-  for(let i = copia.length - 1; i > 0; i--){
 
-    const j = Math.floor(Math.random() * (i + 1));
+for(
+let i = copia.length - 1;
+i > 0;
+i--
+){
 
-    [copia[i], copia[j]] = [copia[j], copia[i]];
+const j =
+Math.floor(
+Math.random() * (i + 1)
+);
 
-  }
 
-  return copia;
+[copia[i],copia[j]] =
+[copia[j],copia[i]];
 
 }
 
 
-let resultadoActual = null;
-let codigoActual = null;
+return copia;
+
+}
+
 
 
 function realizarSorteo(){
 
-  const apellidos = listaApellidos();
 
-  if(apellidos.length < 2){
+/*
+EVITA REALIZAR OTRO SORTEO
+SI YA EXISTE UN RESULTADO
+*/
 
-    alert('Ingresá al menos dos apellidos para realizar el sorteo.');
+if(resultadoActual){
 
-    return;
+alert(
+'Este sorteo ya fue realizado. Para iniciar otro procedimiento utilizá "NUEVO SORTEO".'
+);
 
-  }
-
-
-  if(!document.getElementById('oficina').value.trim()){
-
-    alert('Ingresá la oficina o Registro Civil.');
-
-    return;
-
-  }
-
-
-  if(!document.getElementById('menor').value.trim()){
-
-    alert('Ingresá el nombre del/la menor.');
-
-    return;
-
-  }
-
-
-  if(!document.getElementById('fechaNacimiento').value){
-
-    alert('Ingresá la fecha de nacimiento.');
-
-    return;
-
-  }
-
-
-  if(!document.getElementById('progenitor1').value.trim() ||
-     !document.getElementById('dni1').value.trim()){
-
-    alert('Completá los datos del progenitor/a 1.');
-
-    return;
-
-  }
-
-
-  if(!document.getElementById('progenitor2').value.trim() ||
-     !document.getElementById('dni2').value.trim()){
-
-    alert('Completá los datos del progenitor/a 2.');
-
-    return;
-
-  }
-
-
-  const orden = mezclar(apellidos);
-
-  resultadoActual = orden;
-
-  codigoActual = generarCodigo();
-
-
-  const resultado = document.getElementById('resultado');
-
-  resultado.style.display = 'block';
-
-
-  document.getElementById('codigoResultado').textContent =
-    'Código: ' + codigoActual;
-
-
-  const anim = document.getElementById('anim');
-
-  anim.textContent = '🎲 Realizando sorteo...';
-
-
-  let vueltas = 0;
-
-  const timer = setInterval(() => {
-
-    const temporal =
-      apellidos[Math.floor(Math.random() * apellidos.length)];
-
-    anim.textContent = '🎲 ' + temporal;
-
-    vueltas++;
-
-    if(vueltas >= 20){
-
-      clearInterval(timer);
-
-      anim.textContent = '🏆 ¡Sorteo realizado!';
-
-      document.getElementById('primerApellido').textContent =
-        orden[0];
-
-      document.getElementById('ordenResultado').textContent =
-        orden.join(' ');
-
-    }
-
-  },80);
-
-
-  resultado.scrollIntoView({
-    behavior:'smooth'
-  });
+return;
 
 }
+
+
+const apellidos =
+listaApellidos();
+
+
+if(apellidos.length < 2){
+
+alert(
+'Ingresá al menos dos apellidos para realizar el sorteo.'
+);
+
+return;
+
+}
+
+
+if(
+!document
+.getElementById('oficina')
+.value.trim()
+){
+
+alert(
+'Ingresá la oficina o Registro Civil.'
+);
+
+return;
+
+}
+
+
+if(
+!document
+.getElementById('menor')
+.value.trim()
+){
+
+alert(
+'Ingresá el nombre del/la menor.'
+);
+
+return;
+
+}
+
+
+if(
+!document
+.getElementById('fechaNacimiento')
+.value
+){
+
+alert(
+'Ingresá la fecha de nacimiento.'
+);
+
+return;
+
+}
+
+
+if(
+!document
+.getElementById('progenitor1')
+.value.trim()
+||
+!document
+.getElementById('dni1')
+.value.trim()
+){
+
+alert(
+'Completá los datos del progenitor/a 1.'
+);
+
+return;
+
+}
+
+
+if(
+!document
+.getElementById('progenitor2')
+.value.trim()
+||
+!document
+.getElementById('dni2')
+.value.trim()
+){
+
+alert(
+'Completá los datos del progenitor/a 2.'
+);
+
+return;
+
+}
+
+
+/*
+GUARDAMOS FECHA Y HORA EXACTAS
+DEL SORTEO
+*/
+
+fechaHoraSorteo =
+new Date();
+
+
+/*
+GENERAMOS EL ORDEN
+*/
+
+const orden =
+mezclar(apellidos);
+
+
+resultadoActual =
+orden;
+
+
+codigoActual =
+generarCodigo();
+
+
+
+/*
+MOSTRAMOS RESULTADO
+*/
+
+const resultado =
+document.getElementById('resultado');
+
+
+resultado.style.display =
+'block';
+
+
+document.getElementById(
+'codigoResultado'
+).textContent =
+'Código: ' + codigoActual;
+
+
+const anim =
+document.getElementById('anim');
+
+
+anim.textContent =
+'🎲 Realizando sorteo...';
+
+
+
+/*
+BLOQUEAMOS EL BOTÓN
+*/
+
+document.getElementById(
+'botonSortear'
+).disabled =
+true;
+
+
+
+/*
+ANIMACIÓN
+*/
+
+let vueltas = 0;
+
+
+const timer =
+setInterval(() => {
+
+
+const temporal =
+
+apellidos[
+Math.floor(
+Math.random() *
+apellidos.length
+)
+];
+
+
+anim.textContent =
+'🎲 ' + temporal;
+
+
+vueltas++;
+
+
+if(vueltas >= 20){
+
+
+clearInterval(timer);
+
+
+anim.textContent =
+'🏆 ¡Sorteo realizado!';
+
+
+document.getElementById(
+'primerApellido'
+).textContent =
+orden[0];
+
+
+document.getElementById(
+'ordenResultado'
+).textContent =
+orden.join(' ');
+
+
+}
+
+
+},80);
+
+
+
+resultado.scrollIntoView({
+behavior:'smooth'
+});
+
+
+}
+
 
 
 function fechaArgentina(){
 
-  const fecha = new Date();
-
-  return fecha.toLocaleDateString('es-AR');
+return fechaHoraSorteo
+.toLocaleDateString(
+'es-AR'
+);
 
 }
+
 
 
 function horaArgentina(){
 
-  const fecha = new Date();
-
-  return fecha.toLocaleTimeString('es-AR',{
-    hour:'2-digit',
-    minute:'2-digit'
-  });
+return fechaHoraSorteo
+.toLocaleTimeString(
+'es-AR',
+{
+hour:'2-digit',
+minute:'2-digit',
+second:'2-digit'
+}
+);
 
 }
 
 
-function formatearFechaNacimiento(valor){
 
-  if(!valor) return '';
+function formatearFechaNacimiento(
+valor
+){
 
-  const partes = valor.split('-');
+if(!valor)
+return '';
 
-  return partes[2] + '/' + partes[1] + '/' + partes[0];
+
+const partes =
+valor.split('-');
+
+
+return partes[2] +
+'/' +
+partes[1] +
+'/' +
+partes[0];
 
 }
+
 
 
 function mostrarConstancia(){
 
-  if(!resultadoActual){
 
-    alert('Primero realizá el sorteo.');
+if(!resultadoActual){
 
-    return;
+alert(
+'Primero realizá el sorteo.'
+);
 
-  }
-
-
-  document.getElementById('cOficina').textContent =
-    document.getElementById('oficina').value.trim();
-
-  document.getElementById('cFecha').textContent =
-    fechaArgentina();
-
-  document.getElementById('cHora').textContent =
-    horaArgentina();
-
-  document.getElementById('cCodigo').textContent =
-    codigoActual;
-
-  document.getElementById('cCodigoFinal').textContent =
-    codigoActual;
-
-  document.getElementById('cMenor').textContent =
-    document.getElementById('menor').value.trim();
-
-  document.getElementById('cFechaNacimiento').textContent =
-    formatearFechaNacimiento(
-      document.getElementById('fechaNacimiento').value
-    );
-
-  document.getElementById('cProgenitor1').textContent =
-    document.getElementById('progenitor1').value.trim();
-
-  document.getElementById('cDni1').textContent =
-    document.getElementById('dni1').value.trim();
-
-  document.getElementById('cProgenitor2').textContent =
-    document.getElementById('progenitor2').value.trim();
-
-  document.getElementById('cDni2').textContent =
-    document.getElementById('dni2').value.trim();
-
-  document.getElementById('cPrimerApellido').textContent =
-    resultadoActual[0];
-
-  document.getElementById('cOrden').textContent =
-    resultadoActual.join(' ');
-
-
-  window.print();
+return;
 
 }
+
+
+
+document.getElementById(
+'cOficina'
+).textContent =
+
+document.getElementById(
+'oficina'
+).value.trim();
+
+
+
+document.getElementById(
+'cFecha'
+).textContent =
+
+fechaArgentina();
+
+
+
+document.getElementById(
+'cHora'
+).textContent =
+
+horaArgentina();
+
+
+
+document.getElementById(
+'cCodigo'
+).textContent =
+
+codigoActual;
+
+
+
+document.getElementById(
+'cCodigoFinal'
+).textContent =
+
+codigoActual;
+
+
+
+document.getElementById(
+'cMenor'
+).textContent =
+
+document.getElementById(
+'menor'
+).value.trim();
+
+
+
+document.getElementById(
+'cFechaNacimiento'
+).textContent =
+
+formatearFechaNacimiento(
+
+document.getElementById(
+'fechaNacimiento'
+).value
+
+);
+
+
+
+document.getElementById(
+'cProgenitor1'
+).textContent =
+
+document.getElementById(
+'progenitor1'
+).value.trim();
+
+
+
+document.getElementById(
+'cDni1'
+).textContent =
+
+document.getElementById(
+'dni1'
+).value.trim();
+
+
+
+document.getElementById(
+'cProgenitor2'
+).textContent =
+
+document.getElementById(
+'progenitor2'
+).value.trim();
+
+
+
+document.getElementById(
+'cDni2'
+).textContent =
+
+document.getElementById(
+'dni2'
+).value.trim();
+
+
+
+document.getElementById(
+'cPrimerApellido'
+).textContent =
+
+resultadoActual[0];
+
+
+
+document.getElementById(
+'cOrden'
+).textContent =
+
+resultadoActual.join(' ');
+
+
+
+window.print();
+
+}
+
 
 
 function copiarResultado(){
 
-  if(!resultadoActual) return;
 
-  const texto =
-    'CONSTANCIA DE SORTEO PARA DETERMINACIÓN DEL ORDEN DE APELLIDOS\n\n' +
-
-    'Código: ' + codigoActual + '\n' +
-
-    'Oficina: ' +
-    document.getElementById('oficina').value.trim() + '\n' +
-
-    'Menor: ' +
-    document.getElementById('menor').value.trim() + '\n' +
-
-    'Fecha de nacimiento: ' +
-    formatearFechaNacimiento(
-      document.getElementById('fechaNacimiento').value
-    ) + '\n\n' +
-
-    'Primer apellido determinado: ' +
-    resultadoActual[0] + '\n' +
-
-    'Orden resultante: ' +
-    resultadoActual.join(' ') + '\n\n' +
-
-    'Fecha del sorteo: ' +
-    fechaArgentina() + '\n' +
-
-    'Hora: ' +
-    horaArgentina();
+if(!resultadoActual)
+return;
 
 
-  navigator.clipboard.writeText(texto)
-    .then(() => alert('Resultado copiado correctamente.'));
+
+const texto =
+
+'CONSTANCIA DE SORTEO PARA DETERMINACIÓN DEL ORDEN DE APELLIDOS\n\n' +
+
+'Código: ' +
+codigoActual +
+'\n' +
+
+'Oficina: ' +
+document.getElementById(
+'oficina'
+).value.trim() +
+'\n' +
+
+'Menor: ' +
+document.getElementById(
+'menor'
+).value.trim() +
+'\n' +
+
+'Fecha de nacimiento: ' +
+formatearFechaNacimiento(
+document.getElementById(
+'fechaNacimiento'
+).value
+) +
+'\n\n' +
+
+'Primer apellido determinado: ' +
+resultadoActual[0] +
+'\n' +
+
+'Orden resultante: ' +
+resultadoActual.join(' ') +
+'\n\n' +
+
+'Fecha del sorteo: ' +
+fechaArgentina() +
+'\n' +
+
+'Hora: ' +
+horaArgentina();
+
+
+
+navigator.clipboard
+.writeText(texto)
+.then(() => {
+
+alert(
+'Resultado copiado correctamente.'
+);
+
+});
 
 }
+
 
 
 function nuevoSorteo(){
 
-  if(confirm('¿Querés comenzar un nuevo sorteo?')){
 
-    document.getElementById('resultado').style.display = 'none';
+if(
+confirm(
+'¿Querés comenzar un nuevo sorteo?'
+)
+){
 
-    resultadoActual = null;
 
-    codigoActual = null;
+resultadoActual =
+null;
 
-    window.scrollTo({
-      top:0,
-      behavior:'smooth'
-    });
 
-  }
+codigoActual =
+null;
+
+
+fechaHoraSorteo =
+null;
+
+
+document.getElementById(
+'resultado'
+).style.display =
+'none';
+
+
+document.getElementById(
+'botonSortear'
+).disabled =
+false;
+
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+
+}
 
 }
 
 
+
 actualizarContador();
+
 
 </script>
 
