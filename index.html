@@ -285,6 +285,30 @@ button:disabled {
         margin: 5px 0;
     }
 
+    /* =========================
+       FUNDAMENTO LEGAL
+       ========================= */
+
+    .fundamento-constancia {
+        border: 1px solid #000;
+        padding: 8px 10px;
+        margin: 10px 0;
+        text-align: justify;
+        page-break-inside: avoid;
+        font-size: 9.5pt;
+        line-height: 1.3;
+    }
+
+    .fundamento-constancia .titulo {
+        font-weight: bold;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .fundamento-constancia p {
+        margin: 0;
+    }
+
     .resultado-impresion {
         border: 1px solid #000;
         padding: 7px;
@@ -343,12 +367,21 @@ button:disabled {
 <div class="container">
 
     <div class="header">
-        <img src="images.png" alt="Registro Civil" class="logo">
+
+        <img
+            src="images.png"
+            alt="Registro Civil"
+            class="logo"
+        >
 
         <h1>SORTEO DE ORDEN DE APELLIDOS</h1>
 
-        <p>REGISTRO CIVIL · ÁREA DE NACIMIENTOS</p>
+        <p>
+            REGISTRO CIVIL · ÁREA DE NACIMIENTOS
+        </p>
+
     </div>
+
 
     <div class="section-title">
         Datos de la oficina
@@ -357,11 +390,21 @@ button:disabled {
     <div class="form-grid">
 
         <div class="full">
-            <label for="oficina">Oficina / Registro Civil</label>
-            <input type="text" id="oficina" placeholder="Ingrese la oficina">
+
+            <label for="oficina">
+                Oficina / Registro Civil
+            </label>
+
+            <input
+                type="text"
+                id="oficina"
+                placeholder="Ingrese la oficina"
+            >
+
         </div>
 
     </div>
+
 
     <div class="section-title">
         Datos del menor
@@ -370,16 +413,35 @@ button:disabled {
     <div class="form-grid">
 
         <div>
-            <label for="menor">Nombre del menor</label>
-            <input type="text" id="menor" placeholder="Nombre completo">
+
+            <label for="menor">
+                Nombre del menor
+            </label>
+
+            <input
+                type="text"
+                id="menor"
+                placeholder="Nombre completo"
+            >
+
         </div>
 
+
         <div>
-            <label for="fechaNacimiento">Fecha de nacimiento</label>
-            <input type="date" id="fechaNacimiento">
+
+            <label for="fechaNacimiento">
+                Fecha de nacimiento
+            </label>
+
+            <input
+                type="date"
+                id="fechaNacimiento"
+            >
+
         </div>
 
     </div>
+
 
     <div class="section-title">
         Datos de los progenitores
@@ -388,32 +450,73 @@ button:disabled {
     <div class="form-grid">
 
         <div>
-            <label for="progenitor1">Progenitor/a 1</label>
-            <input type="text" id="progenitor1" placeholder="Apellido y nombre">
+
+            <label for="progenitor1">
+                Progenitor/a 1
+            </label>
+
+            <input
+                type="text"
+                id="progenitor1"
+                placeholder="Apellido y nombre"
+            >
+
         </div>
 
-        <div>
-            <label for="dni1">DNI</label>
-            <input type="text" id="dni1" placeholder="Número de DNI">
-        </div>
 
         <div>
-            <label for="progenitor2">Progenitor/a 2</label>
-            <input type="text" id="progenitor2" placeholder="Apellido y nombre">
+
+            <label for="dni1">
+                DNI
+            </label>
+
+            <input
+                type="text"
+                id="dni1"
+                placeholder="Número de DNI"
+            >
+
         </div>
 
+
         <div>
-            <label for="dni2">DNI</label>
-            <input type="text" id="dni2" placeholder="Número de DNI">
+
+            <label for="progenitor2">
+                Progenitor/a 2
+            </label>
+
+            <input
+                type="text"
+                id="progenitor2"
+                placeholder="Apellido y nombre"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="dni2">
+                DNI
+            </label>
+
+            <input
+                type="text"
+                id="dni2"
+                placeholder="Número de DNI"
+            >
+
         </div>
 
     </div>
+
 
     <div class="section-title">
         Apellidos a sortear
     </div>
 
     <div>
+
         <label for="apellidos">
             Ingrese un apellido por línea
         </label>
@@ -422,12 +525,9 @@ button:disabled {
             id="apellidos"
             placeholder="GIGENA&#10;RE"
         ></textarea>
+
     </div>
 
-    <div class="fundamento-legal">
-        <strong>Fundamento legal:</strong> Artículo 64 del Código Civil y Comercial de la Nación.
-        Ante la falta de acuerdo respecto del orden de los apellidos, este se determina mediante sorteo.
-    </div>
 
     <div class="button-area">
 
@@ -441,31 +541,57 @@ button:disabled {
 
     </div>
 
-    <div id="resultado" class="resultado">
 
-        <h2>RESULTADO DEL SORTEO</h2>
+    <div
+        id="resultado"
+        class="resultado"
+    >
 
-        <div id="codigoResultado" class="codigo"></div>
+        <h2>
+            RESULTADO DEL SORTEO
+        </h2>
 
-        <div id="animacion" class="animacion">
+
+        <div
+            id="codigoResultado"
+            class="codigo"
+        ></div>
+
+
+        <div
+            id="animacion"
+            class="animacion"
+        >
             Realizando sorteo...
         </div>
+
 
         <div>
             El primer apellido será:
         </div>
 
-        <div id="apellidoPrincipal" class="apellido-principal"></div>
+
+        <div
+            id="apellidoPrincipal"
+            class="apellido-principal"
+        ></div>
+
 
         <div>
             Orden completo:
         </div>
 
-        <div id="ordenCompleto" class="orden-completo"></div>
+
+        <div
+            id="ordenCompleto"
+            class="orden-completo"
+        ></div>
+
 
         <div class="nota">
             El resultado queda registrado y bloqueado hasta iniciar un nuevo sorteo.
         </div>
+
 
         <div class="button-area">
 
@@ -476,12 +602,14 @@ button:disabled {
                 🖨️ IMPRIMIR / GUARDAR PDF
             </button>
 
+
             <button
                 class="btn-copy"
                 onclick="copiarResultado()"
             >
                 📋 COPIAR RESULTADO
             </button>
+
 
             <button
                 class="btn-new"
@@ -501,7 +629,10 @@ button:disabled {
      CONSTANCIA
      ========================= -->
 
-<div id="constancia" class="constancia">
+<div
+    id="constancia"
+    class="constancia"
+>
 
     <div class="constancia-header">
 
@@ -511,12 +642,18 @@ button:disabled {
             class="constancia-logo"
         >
 
-        <h1>REGISTRO CIVIL</h1>
-
-        <h2>ÁREA DE NACIMIENTOS</h2>
+        <h1>
+            REGISTRO CIVIL
+        </h1>
 
         <h2>
-            <strong>CONSTANCIA DE SORTEO DE ORDEN DE APELLIDOS</strong>
+            ÁREA DE NACIMIENTOS
+        </h2>
+
+        <h2>
+            <strong>
+                CONSTANCIA DE SORTEO DE ORDEN DE APELLIDOS
+            </strong>
         </h2>
 
     </div>
@@ -525,47 +662,101 @@ button:disabled {
     <div class="datos">
 
         <p>
-            <strong>Oficina / Registro Civil:</strong>
+            <strong>
+                Oficina / Registro Civil:
+            </strong>
+
             <span id="cOficina"></span>
         </p>
 
+
         <p>
-            <strong>Fecha:</strong>
+
+            <strong>
+                Fecha:
+            </strong>
+
             <span id="cFecha"></span>
+
             &nbsp;&nbsp;&nbsp;
-            <strong>Hora:</strong>
+
+            <strong>
+                Hora:
+            </strong>
+
             <span id="cHora"></span>
+
         </p>
 
+
         <p>
-            <strong>Código de sorteo:</strong>
+
+            <strong>
+                Código de sorteo:
+            </strong>
+
             <span id="cCodigo"></span>
+
         </p>
 
+
         <p>
-            <strong>Nombre del menor:</strong>
+
+            <strong>
+                Nombre del menor:
+            </strong>
+
             <span id="cMenor"></span>
+
         </p>
 
+
         <p>
-            <strong>Fecha de nacimiento:</strong>
+
+            <strong>
+                Fecha de nacimiento:
+            </strong>
+
             <span id="cNacimiento"></span>
+
         </p>
 
+
         <p>
-            <strong>Progenitor/a 1:</strong>
+
+            <strong>
+                Progenitor/a 1:
+            </strong>
+
             <span id="cProgenitor1"></span>
+
             &nbsp;&nbsp;
-            <strong>DNI:</strong>
+
+            <strong>
+                DNI:
+            </strong>
+
             <span id="cDni1"></span>
+
         </p>
 
+
         <p>
-            <strong>Progenitor/a 2:</strong>
+
+            <strong>
+                Progenitor/a 2:
+            </strong>
+
             <span id="cProgenitor2"></span>
+
             &nbsp;&nbsp;
-            <strong>DNI:</strong>
+
+            <strong>
+                DNI:
+            </strong>
+
             <span id="cDni2"></span>
+
         </p>
 
     </div>
@@ -574,18 +765,53 @@ button:disabled {
     <div class="texto-constancia">
 
         <p>
-            En la ciudad de Córdoba, se deja constancia de que, ante la
-            falta de acuerdo respecto del orden de los apellidos del menor,
-            y en el marco de lo establecido por el artículo 64 del Código
-            Civil y Comercial de la Nación, se realizó el correspondiente
-            sorteo mediante el sistema dispuesto por el Área de Nacimientos
-            del Registro Civil.
+
+            En la ciudad de Córdoba, se deja constancia de que,
+            ante la falta de acuerdo respecto del orden de los
+            apellidos del menor, se realizó el correspondiente
+            sorteo mediante el sistema dispuesto por el Área de
+            Nacimientos del Registro Civil.
+
         </p>
 
+    </div>
+
+
+    <!-- =========================
+         FUNDAMENTO LEGAL
+         ========================= -->
+
+    <div class="fundamento-constancia">
+
+        <div class="titulo">
+            FUNDAMENTO LEGAL
+        </div>
+
         <p>
-            El procedimiento se realizó sobre los apellidos consignados
-            por los progenitores, obteniéndose como resultado el siguiente
-            orden:
+
+            En cumplimiento del
+            <strong>
+                artículo 64 del Código Civil y Comercial de la Nación
+            </strong>,
+            y debido a la falta de acuerdo respecto del orden de los
+            apellidos, se ha realizado el
+            <strong>
+                sorteo para determinar dicho orden
+            </strong>.
+
+        </p>
+
+    </div>
+
+
+    <div class="texto-constancia">
+
+        <p>
+
+            El procedimiento se realizó sobre los apellidos
+            consignados por los progenitores, obteniéndose como
+            resultado el siguiente orden:
+
         </p>
 
     </div>
@@ -608,14 +834,18 @@ button:disabled {
     <div class="texto-constancia">
 
         <p>
-            Se extiende la presente constancia a los fines de dejar
-            registrado el resultado obtenido.
+
+            Se extiende la presente constancia a los fines de
+            dejar registrado el resultado obtenido.
+
         </p>
 
     </div>
 
 
-    <!-- SOLO FIRMAS DE LOS PROGENITORES -->
+    <!-- =========================
+         FIRMAS DE LOS PROGENITORES
+         ========================= -->
 
     <div class="firmas">
 
@@ -626,7 +856,9 @@ button:disabled {
             </div>
 
             <p>
-                <strong>Progenitor/a 1</strong>
+                <strong>
+                    Progenitor/a 1
+                </strong>
             </p>
 
             <p>
@@ -647,7 +879,9 @@ button:disabled {
             </div>
 
             <p>
-                <strong>Progenitor/a 2</strong>
+                <strong>
+                    Progenitor/a 2
+                </strong>
             </p>
 
             <p>
@@ -664,8 +898,10 @@ button:disabled {
 
 
     <div class="pie">
+
         Documento generado por el sistema de Sorteo de Orden de Apellidos
         · Registro Civil · Área de Nacimientos
+
     </div>
 
 </div>
@@ -686,19 +922,38 @@ function generarCodigo() {
 
     const ahora = new Date();
 
-    const año = ahora.getFullYear();
+    const año =
+        ahora.getFullYear();
 
-    const mes = String(ahora.getMonth() + 1).padStart(2, "0");
+    const mes =
+        String(
+            ahora.getMonth() + 1
+        ).padStart(2, "0");
 
-    const dia = String(ahora.getDate()).padStart(2, "0");
+    const dia =
+        String(
+            ahora.getDate()
+        ).padStart(2, "0");
 
-    const hora = String(ahora.getHours()).padStart(2, "0");
+    const hora =
+        String(
+            ahora.getHours()
+        ).padStart(2, "0");
 
-    const minutos = String(ahora.getMinutes()).padStart(2, "0");
+    const minutos =
+        String(
+            ahora.getMinutes()
+        ).padStart(2, "0");
 
-    const segundos = String(ahora.getSeconds()).padStart(2, "0");
+    const segundos =
+        String(
+            ahora.getSeconds()
+        ).padStart(2, "0");
 
-    const aleatorio = Math.floor(100 + Math.random() * 900);
+    const aleatorio =
+        Math.floor(
+            100 + Math.random() * 900
+        );
 
     return `RC-NAC-${año}${mes}${dia}-${hora}${minutos}${segundos}-${aleatorio}`;
 }
@@ -718,7 +973,10 @@ function mezclar(array) {
         i--
     ) {
 
-        const j = Math.floor(Math.random() * (i + 1));
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
 
         [
             copia[i],
@@ -727,6 +985,7 @@ function mezclar(array) {
             copia[j],
             copia[i]
         ];
+
     }
 
     return copia;
@@ -751,28 +1010,58 @@ function realizarSorteo() {
 
 
     const oficina =
-        document.getElementById("oficina").value.trim();
+        document
+            .getElementById("oficina")
+            .value
+            .trim();
+
 
     const menor =
-        document.getElementById("menor").value.trim();
+        document
+            .getElementById("menor")
+            .value
+            .trim();
+
 
     const fechaNacimiento =
-        document.getElementById("fechaNacimiento").value;
+        document
+            .getElementById("fechaNacimiento")
+            .value;
+
 
     const progenitor1 =
-        document.getElementById("progenitor1").value.trim();
+        document
+            .getElementById("progenitor1")
+            .value
+            .trim();
+
 
     const dni1 =
-        document.getElementById("dni1").value.trim();
+        document
+            .getElementById("dni1")
+            .value
+            .trim();
+
 
     const progenitor2 =
-        document.getElementById("progenitor2").value.trim();
+        document
+            .getElementById("progenitor2")
+            .value
+            .trim();
+
 
     const dni2 =
-        document.getElementById("dni2").value.trim();
+        document
+            .getElementById("dni2")
+            .value
+            .trim();
+
 
     const textoApellidos =
-        document.getElementById("apellidos").value.trim();
+        document
+            .getElementById("apellidos")
+            .value
+            .trim();
 
 
     if (
@@ -797,8 +1086,12 @@ function realizarSorteo() {
     const apellidos =
         textoApellidos
             .split("\n")
-            .map(a => a.trim())
-            .filter(a => a.length > 0);
+            .map(
+                a => a.trim()
+            )
+            .filter(
+                a => a.length > 0
+            );
 
 
     if (apellidos.length < 2) {
@@ -811,55 +1104,85 @@ function realizarSorteo() {
     }
 
 
-    fechaHoraSorteo = new Date();
+    fechaHoraSorteo =
+        new Date();
 
-    codigoActual = generarCodigo();
 
-    resultadoActual = mezclar(apellidos);
+    codigoActual =
+        generarCodigo();
+
+
+    resultadoActual =
+        mezclar(apellidos);
 
 
     const boton =
         document.getElementById("btnSortear");
 
-    boton.disabled = true;
+
+    boton.disabled =
+        true;
 
 
-    /* Bloquear todos los datos */
+    /* =========================
+       BLOQUEAR TODOS LOS DATOS
+       ========================= */
 
-    document.querySelectorAll(
-        "input, textarea"
-    ).forEach(elemento => {
+    document
+        .querySelectorAll(
+            "input, textarea"
+        )
+        .forEach(
+            elemento => {
 
-        elemento.disabled = true;
+                elemento.disabled =
+                    true;
 
-    });
+            }
+        );
 
 
-    document.getElementById("resultado").style.display = "block";
+    document
+        .getElementById("resultado")
+        .style.display =
+        "block";
 
-    document.getElementById("codigoResultado").textContent =
+
+    document
+        .getElementById("codigoResultado")
+        .textContent =
         "Código: " + codigoActual;
 
 
     const animacion =
         document.getElementById("animacion");
 
+
     animacion.textContent =
         "🎲 Sorteando...";
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        animacion.textContent =
-            "✓ Sorteo realizado";
+            animacion.textContent =
+                "✓ Sorteo realizado";
 
-        document.getElementById("apellidoPrincipal").textContent =
-            resultadoActual[0];
 
-        document.getElementById("ordenCompleto").textContent =
-            resultadoActual.join(" ");
+            document
+                .getElementById("apellidoPrincipal")
+                .textContent =
+                resultadoActual[0];
 
-    }, 1000);
+
+            document
+                .getElementById("ordenCompleto")
+                .textContent =
+                resultadoActual.join(" ");
+
+        },
+        1000
+    );
 
 }
 
@@ -872,79 +1195,140 @@ function mostrarConstancia() {
 
     if (!resultadoActual) {
 
-        alert("Primero debe realizar el sorteo.");
+        alert(
+            "Primero debe realizar el sorteo."
+        );
 
         return;
     }
 
 
     const oficina =
-        document.getElementById("oficina").value;
+        document
+            .getElementById("oficina")
+            .value;
+
 
     const menor =
-        document.getElementById("menor").value;
+        document
+            .getElementById("menor")
+            .value;
+
 
     const fechaNacimiento =
-        document.getElementById("fechaNacimiento").value;
+        document
+            .getElementById("fechaNacimiento")
+            .value;
+
 
     const progenitor1 =
-        document.getElementById("progenitor1").value;
+        document
+            .getElementById("progenitor1")
+            .value;
+
 
     const dni1 =
-        document.getElementById("dni1").value;
+        document
+            .getElementById("dni1")
+            .value;
+
 
     const progenitor2 =
-        document.getElementById("progenitor2").value;
+        document
+            .getElementById("progenitor2")
+            .value;
+
 
     const dni2 =
-        document.getElementById("dni2").value;
+        document
+            .getElementById("dni2")
+            .value;
 
 
     const fecha =
-        fechaHoraSorteo.toLocaleDateString("es-AR");
+        fechaHoraSorteo
+            .toLocaleDateString(
+                "es-AR"
+            );
+
 
     const hora =
-        fechaHoraSorteo.toLocaleTimeString(
-            "es-AR",
-            {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-            }
+        fechaHoraSorteo
+            .toLocaleTimeString(
+                "es-AR",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                }
+            );
+
+
+    document
+        .getElementById("cOficina")
+        .textContent =
+        oficina;
+
+
+    document
+        .getElementById("cFecha")
+        .textContent =
+        fecha;
+
+
+    document
+        .getElementById("cHora")
+        .textContent =
+        hora;
+
+
+    document
+        .getElementById("cCodigo")
+        .textContent =
+        codigoActual;
+
+
+    document
+        .getElementById("cMenor")
+        .textContent =
+        menor;
+
+
+    document
+        .getElementById("cNacimiento")
+        .textContent =
+        formatearFecha(
+            fechaNacimiento
         );
 
 
-    document.getElementById("cOficina").textContent =
-        oficina;
-
-    document.getElementById("cFecha").textContent =
-        fecha;
-
-    document.getElementById("cHora").textContent =
-        hora;
-
-    document.getElementById("cCodigo").textContent =
-        codigoActual;
-
-    document.getElementById("cMenor").textContent =
-        menor;
-
-    document.getElementById("cNacimiento").textContent =
-        formatearFecha(fechaNacimiento);
-
-    document.getElementById("cProgenitor1").textContent =
+    document
+        .getElementById("cProgenitor1")
+        .textContent =
         progenitor1;
 
-    document.getElementById("cDni1").textContent =
+
+    document
+        .getElementById("cDni1")
+        .textContent =
         dni1;
 
-    document.getElementById("cProgenitor2").textContent =
+
+    document
+        .getElementById("cProgenitor2")
+        .textContent =
         progenitor2;
 
-    document.getElementById("cDni2").textContent =
+
+    document
+        .getElementById("cDni2")
+        .textContent =
         dni2;
 
-    document.getElementById("cResultado").textContent =
+
+    document
+        .getElementById("cResultado")
+        .textContent =
         resultadoActual.join(" ");
 
 
@@ -959,9 +1343,13 @@ function mostrarConstancia() {
 
 function formatearFecha(fecha) {
 
-    if (!fecha) return "";
+    if (!fecha)
+        return "";
 
-    const partes = fecha.split("-");
+
+    const partes =
+        fecha.split("-");
+
 
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
@@ -973,7 +1361,8 @@ function formatearFecha(fecha) {
 
 function copiarResultado() {
 
-    if (!resultadoActual) return;
+    if (!resultadoActual)
+        return;
 
 
     const texto =
@@ -984,21 +1373,27 @@ function copiarResultado() {
         `Orden de apellidos: ${resultadoActual.join(" ")}`;
 
 
-    navigator.clipboard.writeText(texto)
-        .then(() => {
+    navigator
+        .clipboard
+        .writeText(texto)
+        .then(
+            () => {
 
-            alert(
-                "Resultado copiado correctamente."
-            );
+                alert(
+                    "Resultado copiado correctamente."
+                );
 
-        })
-        .catch(() => {
+            }
+        )
+        .catch(
+            () => {
 
-            alert(
-                "No se pudo copiar automáticamente el resultado."
-            );
+                alert(
+                    "No se pudo copiar automáticamente el resultado."
+                );
 
-        });
+            }
+        );
 
 }
 
@@ -1016,43 +1411,67 @@ function nuevoSorteo() {
         );
 
 
-    if (!confirmar) return;
+    if (!confirmar)
+        return;
 
 
-    resultadoActual = null;
+    resultadoActual =
+        null;
 
-    codigoActual = null;
+    codigoActual =
+        null;
 
-    fechaHoraSorteo = null;
+    fechaHoraSorteo =
+        null;
 
 
-    document.getElementById("resultado").style.display =
+    document
+        .getElementById("resultado")
+        .style.display =
         "none";
 
 
-    document.getElementById("animacion").textContent =
+    document
+        .getElementById("animacion")
+        .textContent =
         "Realizando sorteo...";
 
-    document.getElementById("apellidoPrincipal").textContent =
-        "";
 
-    document.getElementById("ordenCompleto").textContent =
-        "";
-
-    document.getElementById("codigoResultado").textContent =
+    document
+        .getElementById("apellidoPrincipal")
+        .textContent =
         "";
 
 
-    document.querySelectorAll(
-        "input, textarea"
-    ).forEach(elemento => {
-
-        elemento.disabled = false;
-
-    });
+    document
+        .getElementById("ordenCompleto")
+        .textContent =
+        "";
 
 
-    document.getElementById("btnSortear").disabled =
+    document
+        .getElementById("codigoResultado")
+        .textContent =
+        "";
+
+
+    document
+        .querySelectorAll(
+            "input, textarea"
+        )
+        .forEach(
+            elemento => {
+
+                elemento.disabled =
+                    false;
+
+            }
+        );
+
+
+    document
+        .getElementById("btnSortear")
+        .disabled =
         false;
 
 }
